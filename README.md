@@ -6,7 +6,7 @@
 
 `ai-pm-personal-writing` 是一套面向 AI 产品经理专业文章与产品思考随笔的个人写作 Skill。它把真实经历、产品材料、事实证据和作者判断组织成一篇有立场、有边界、能够落到产品行动的文章。
 
-当前版本为 `2.3.0`。
+当前版本为 `2.4.0`。
 
 ## 适合写什么
 
@@ -43,6 +43,14 @@ Skill 默认分四个阶段工作。
 
 如果希望一次性交付，可以明确要求“跳过确认”或“直接写完”。Skill 仍会在内部完成观点和结构检查。
 
+## Article Reviewer 审阅闭环
+
+写完文章后，可以直接要求 Skill 把当前成稿放进 Article Reviewer。审阅页面支持直接编辑和添加批注，修改会自动保存。
+
+返回对话发送“开始修改”后，Skill 会读取最新版本和全部批注，只修改批注指向的内容，保存为新版本，清空已处理批注并重新打开文章。遇到位置不明确的批注或版本冲突时会停止，不会猜测或覆盖当前正文。
+
+Article Reviewer 只在明确要求时打开，普通写作不会自动弹出审阅页面。
+
 ## 安装
 
 将仓库克隆到 Codex 的 Skills 目录。这个仓库当前是私有仓库，克隆时需要使用有权限的 GitHub 账号。
@@ -65,6 +73,10 @@ git clone https://github.com/Irixil/ai-pm-writing-skill.git ~/.codex/skills/ai-p
 
 ```text
 使用 $ai-pm-personal-writing，直接改完这篇 AI 产品文章，并核对事实、反方和结论边界。
+```
+
+```text
+使用 $ai-pm-personal-writing 写完这篇文章，然后打开 Article Reviewer 让我批注。
 ```
 
 ## 文章检查器
@@ -92,6 +104,7 @@ ai-pm-personal-writing/
 ├── assets/icon.svg
 ├── references/
 │   ├── article-structure.md
+│   ├── article-reviewer.md
 │   ├── evidence.md
 │   ├── revision.md
 │   └── voice-profile.md
@@ -101,6 +114,7 @@ ai-pm-personal-writing/
 - `SKILL.md` 定义任务边界和完整工作流。
 - `voice-profile.md` 保存已经确认的长期写作习惯。
 - `article-structure.md` 提供不同文章类型的论证结构。
+- `article-reviewer.md` 定义从打开审阅页面到按批注修改、保存和复核的完整流程。
 - `evidence.md` 规定事实、引语、产品能力和个人经历的边界。
 - `revision.md` 用于全文形成后的系统改稿。
 - `check_ai_pm_article.py` 提供可重复执行的成稿检查。
@@ -113,7 +127,7 @@ MIT License
 
 `ai-pm-personal-writing` is a personal writing skill for AI product management articles and reflective product essays. It turns real experiences, product materials, verified evidence, and the author's judgment into writing with a clear position, explicit boundaries, and practical product implications.
 
-Current version: `2.3.0`.
+Current version: `2.4.0`.
 
 ### What it is for
 
@@ -150,6 +164,14 @@ The skill works in four stages by default.
 
 To receive the complete draft in one pass, explicitly ask to “skip confirmation” or “write the full article directly.” The skill will still test the claim and structure internally.
 
+### Article Reviewer workflow
+
+After drafting an article, you can ask the skill to open the current version in Article Reviewer. The review page supports direct editing and annotations, with changes saved automatically.
+
+When you return to the conversation and say “start editing,” the skill retrieves the latest saved version and all annotations, changes only the annotated content, saves a new version, clears resolved annotations, and reopens the article. It stops instead of guessing when an annotation is ambiguous or a version conflict occurs.
+
+Article Reviewer opens only when requested. Ordinary writing tasks do not launch it automatically.
+
 ### Installation
 
 Clone the repository into the Codex Skills directory. The repository is currently private, so cloning requires a GitHub account with access.
@@ -172,6 +194,10 @@ Use $ai-pm-personal-writing to turn this real product experience into a reflecti
 
 ```text
 Use $ai-pm-personal-writing to revise this AI product article in one pass and check its facts, counterarguments, and conclusion boundaries.
+```
+
+```text
+Use $ai-pm-personal-writing to finish this article, then open it in Article Reviewer for my annotations.
 ```
 
 ### Article checker
@@ -199,6 +225,7 @@ ai-pm-personal-writing/
 ├── assets/icon.svg
 ├── references/
 │   ├── article-structure.md
+│   ├── article-reviewer.md
 │   ├── evidence.md
 │   ├── revision.md
 │   └── voice-profile.md
@@ -208,6 +235,7 @@ ai-pm-personal-writing/
 - `SKILL.md` defines task boundaries and the complete workflow.
 - `voice-profile.md` stores confirmed long-term writing preferences.
 - `article-structure.md` provides argument structures for different article types.
+- `article-reviewer.md` defines the complete open, annotate, revise, save, and verification workflow.
 - `evidence.md` defines boundaries for facts, quotations, product capabilities, and personal experience.
 - `revision.md` guides systematic revision after the full draft exists.
 - `check_ai_pm_article.py` provides a repeatable final-draft check.
