@@ -1,244 +1,376 @@
-# AI 产品经理个人写作 Skill
+# ISHY Personal Writing Workflow
+
+一套为 ISHY 持续维护的个人写作工作流，用于把真实经历、产品材料、事实证据和作者判断推进成可以公开署名的文章。
 
 [中文](#中文) · [English](#english)
 
+当前版本为 <code>2.4.0</code>。
+
 ## 中文
 
-`ai-pm-personal-writing` 是一套面向 AI 产品经理专业文章与产品思考随笔的个人写作 Skill。它把真实经历、产品材料、事实证据和作者判断组织成一篇有立场、有边界、能够落到产品行动的文章。
+### 名字说明
 
-当前版本为 `2.4.0`。
+- GitHub 仓库名是 <code>ishy-personal-writing-workflow</code>。
+- Codex 中的 Skill 调用名是 <code>$ai-pm-personal-writing</code>。
+- 仓库名称代表整套个人写作流程，Skill 名称保留原来的调用兼容性。
 
-## 适合写什么
+### 这套工作流解决什么
 
-- AI 产品方法、产品设计与迭代经验
-- Agent、RAG、模型评测与大模型应用分析
+它覆盖一篇文章从想法还没有收束，到最终完成审阅的全过程。
+
+题目与材料 → 观点讨论 → 大纲确认 → 逐章写作 → 全文整合 → 自动检查 → Article Reviewer 批注 → 保存新版本
+
+它不会只根据一个主题直接生成一篇看起来完整的长文。开始写作前会先检查题目是否成立、材料是否足够、哪些内容属于事实、哪些只是作者判断。文章形成以后，还可以进入 Article Reviewer，由作者直接编辑、添加批注，再让 Codex 按最新版继续修改。
+
+### 核心能力
+
+| 能力 | 实际作用 |
+| --- | --- |
+| 观点讨论 | 找出文章真正要回答的问题，检验隐藏前提、中心观点、最强反方和成立边界 |
+| 材料检查 | 区分用户亲历、官方事实、公开证据、作者推断和当前未知，材料不足时研究、追问或缩小篇幅 |
+| 大纲设计 | 为每一章确定任务、主要材料、限制条件和对下一章的推进作用 |
+| 逐章写作 | 按已确认的大纲分段生成，保留用户已经修改和确认的版本 |
+| 全文整合 | 合并重复内容，统一术语、来源、时间口径和个人文风 |
+| 两种文章模式 | 支持 AI 产品经理专业文章与个人观察型产品随笔 |
+| 个人声音 | 保留具体经历的时间、频率和限制，写出有立场但克制、有一线实操感的作者位置 |
+| 文章检查器 | 检查占位符、空泛开场、模型化路标、营销表达、绝对化断言、反问、短句排队和来源风险 |
+| Article Reviewer | 打开可编辑审阅页面，接收直接修改和批注，按版本安全保存并重新打开 |
+
+### 两种文章模式
+
+#### AI 产品经理专业文章
+
+适合以下内容：
+
+- AI 产品方法、产品设计和迭代经验
+- Agent、RAG、模型能力、评测和数据反馈
 - AI 行业与产品趋势判断
-- 产品案例拆解、项目复盘与转行科普
-- 从个人经历、阅读材料或现实分歧进入产品判断的思考随笔
-- 已有文章的结构调整、事实核验和深度改稿
+- 产品案例拆解和项目复盘
+- 面向 AI 产品经理或转行人群的专业科普
 
-它不用于 PRD、管理层汇报、小说、营销软文、普通聊天和纯代码教程。
+文章会同时检查用户价值、产品机制、商业条件、风险边界和验证标准。技术概念必须落到真实产品动作，抽象判断要能被事实或可观察条件支撑。
 
-## 写作特点
+#### 个人观察型产品随笔
 
-- 开头直接进入判断、具体经历或真实矛盾
-- 先检查题目、概念边界和隐藏前提，再选择立场
-- 区分事实、个人感受、作者推断和当前未知
-- 同时考虑用户价值、产品机制、商业条件与风险边界
-- 主动处理最强反方，不用虚弱的假想观点陪衬
-- 保留真实经历的时间、频率、场景和程度，不扩大成普遍结论
-- 把抽象判断落到授权、纠正、撤回、人工接管和验证标准
-- 表达专业、自然、克制，不批量制造金句、反问和营销口号
+适合从个人经历、阅读材料、亲近关系或现实分歧进入产品判断的文章。
 
-个人观察型产品随笔还会保留一条特殊路径。文章可以先把作者放进问题，再从亲近关系、阅读材料和现实案例逐步走向产品判断，最后回到一个具体的行动或仍未解决的问题。
+这类文章可以先把作者自己放进问题，再逐步走向思想材料和产品案例。结尾回到一个具体行动、仍未解决的问题或下一次会怎样判断，不用临时升高成时代宣言。
 
-## 默认协作流程
+### 默认协作流程
 
-Skill 默认分四个阶段工作。
+#### 1. 讨论观点
 
-1. 讨论文章真正要回答的问题、中心观点、证据、反方和成立条件。
-2. 确认标题、读者、章节任务、主要材料和预计篇幅。
-3. 按确认的大纲逐章生成和修改。
-4. 整合全文，统一术语、来源、结构与个人文风。
+先确认题目、读者、问题、材料和篇幅。Skill 会检查题目中的隐藏前提，并给出中心观点、主要依据、最强反方、限制和未知。
 
-如果希望一次性交付，可以明确要求“跳过确认”或“直接写完”。Skill 仍会在内部完成观点和结构检查。
+观点没有确认时，不提前生成大纲和正文。
 
-## Article Reviewer 审阅闭环
+#### 2. 确认大纲
 
-写完文章后，可以直接要求 Skill 把当前成稿放进 Article Reviewer。审阅页面支持直接编辑和添加批注，修改会自动保存。
+观点确认后，再确定标题、目标读者、章节任务、关键材料、预计篇幅和仍需补充的证据。
 
-返回对话发送“开始修改”后，Skill 会读取最新版本和全部批注，只修改批注指向的内容，保存为新版本，清空已处理批注并重新打开文章。遇到位置不明确的批注或版本冲突时会停止，不会猜测或覆盖当前正文。
+大纲没有确认时，不开始正文。
 
-Article Reviewer 只在明确要求时打开，普通写作不会自动弹出审阅页面。
+#### 3. 逐章生成
 
-## 安装
+默认每轮写一章。用户直接修改过的章节是唯一当前版本，后续内容不能退回更早草稿。
 
-将仓库克隆到 Codex 的 Skills 目录。这个仓库当前是私有仓库，克隆时需要使用有权限的 GitHub 账号。
+如果新证据足以推翻中心观点，Skill 会停止续写并回到观点讨论。
 
-```bash
-git clone https://github.com/Irixil/ai-pm-writing-skill.git ~/.codex/skills/ai-pm-personal-writing
-```
+#### 4. 全文整合
 
-也可以下载仓库后，把整个目录复制到 `~/.codex/skills/ai-pm-personal-writing`。
+所有章节确认后，Skill 会合并重复内容、修正衔接、统一术语和来源，并运行对应的文章检查模式。
 
-## 使用示例
+如果希望一次性交付，可以明确说“跳过确认”“直接写完”或“连续生成”。Skill 仍会在内部完成观点和结构检查。
 
-```text
-使用 $ai-pm-personal-writing，和我讨论一篇关于 Agent 产品授权边界的文章观点。
-```
+### Article Reviewer 审阅闭环
 
-```text
-使用 $ai-pm-personal-writing，把这段真实产品体验整理成一篇个人观察型产品随笔。
-```
+文章完成后，可以直接说：
 
-```text
-使用 $ai-pm-personal-writing，直接改完这篇 AI 产品文章，并核对事实、反方和结论边界。
-```
-
-```text
+~~~text
 使用 $ai-pm-personal-writing 写完这篇文章，然后打开 Article Reviewer 让我批注。
-```
+~~~
 
-## 文章检查器
+审阅页面打开后，你可以：
+
+- 直接修改正文
+- 选中文字添加批注
+- 等待页面显示已经保存
+- 回到对话发送“开始修改”或“按批注修改”
+
+收到“开始修改”后，Codex 必须先读取 Article Reviewer 中最新保存的正文和全部批注。页面里的直接修改优先于聊天旧稿和磁盘旧稿。
+
+随后它会：
+
+1. 按顺序处理全部有效批注。
+2. 只修改批注授权的内容，不顺手重写其他段落。
+3. 保存为新的不可变版本，并清空已处理批注。
+4. 重新打开同一篇文章，让你检查结果。
+
+批注位置不明确、正文为空、版本冲突或源文件哈希变化时，流程会停止，不会猜测或静默覆盖。
+
+如果审阅记录关联了源文件，写入前还会重新核对文件哈希、创建可恢复备份，并保留原始 Markdown 或其他文件格式。
+
+Article Reviewer 是可选功能。普通写作任务不会自动打开审阅页面。
+
+### 事实与证据边界
+
+- 用户亲历保留原来的时间、频率、场景和程度，不能扩大成普遍结论。
+- 产品功能优先以官方文档、实际流程和可核验资料为准。
+- 模型能力、产品能力和具体版本分开描述。
+- 数据说明来源、时间、样本和口径。
+- 公开用户反馈不能伪造成具体身份、精确原话或普遍事实。
+- 因果证据不足时，使用“相关”“可能影响”或明确说明仍待验证。
+- 一千二百字以上的现实文章，内部至少要有五件能够组成实际过程的具体材料。
+
+### 使用示例
+
+讨论观点：
+
+~~~text
+使用 $ai-pm-personal-writing，和我讨论一篇关于 Agent 产品授权边界的文章。
+~~~
+
+直接完成专业文章：
+
+~~~text
+使用 $ai-pm-personal-writing，跳过确认，根据这些材料完成一篇 AI 产品分析文章。
+~~~
+
+写个人观察型产品随笔：
+
+~~~text
+使用 $ai-pm-personal-writing，把这段真实经历和阅读材料写成一篇个人观察型产品随笔。
+~~~
+
+深度修改已有文章：
+
+~~~text
+使用 $ai-pm-personal-writing，检查这篇文章的事实、反方、产品边界和结论，再完成全文改稿。
+~~~
+
+进入审阅页面：
+
+~~~text
+使用 $ai-pm-personal-writing 写完文章，并打开 Article Reviewer 让我修改和批注。
+~~~
+
+### 安装
+
+把仓库克隆到 Codex Skills 目录：
+
+~~~bash
+git clone https://github.com/Irixil/ishy-personal-writing-workflow.git ~/.codex/skills/ai-pm-personal-writing
+~~~
+
+也可以下载仓库后，把完整目录复制到：
+
+~~~text
+~/.codex/skills/ai-pm-personal-writing
+~~~
+
+重新打开一个 Codex 任务后即可使用 <code>$ai-pm-personal-writing</code>。
+
+Article Reviewer 审阅功能需要同时安装并启用 Article Reviewer 插件。没有该插件时，写作、改稿和文章检查器仍然可以正常使用。
+
+### 文章检查器
 
 检查专业文章：
 
-```bash
+~~~bash
 python3 scripts/check_ai_pm_article.py 稿件.md
-```
+~~~
 
 检查个人观察型产品随笔：
 
-```bash
+~~~bash
 python3 scripts/check_ai_pm_article.py --mode essay 稿件.md
-```
+~~~
 
-检查器会发现占位符、空泛开场、模型化路标、营销表达、翻案句密度、绝对化断言、短句排队和来源风险。它只负责提示文字形状，最终判断仍需回到材料、观点和具体体裁。
+检查器负责发现稳定的文字形状和风险信号，不代替作者对事实、观点和体裁的判断。
 
-## 目录结构
+### 目录结构
 
-```text
+~~~text
 ai-pm-personal-writing/
 ├── SKILL.md
-├── agents/openai.yaml
-├── assets/icon.svg
+├── VERSION
+├── README.md
+├── LICENSE
+├── agents/
+│   └── openai.yaml
+├── assets/
+│   └── icon.svg
 ├── references/
-│   ├── article-structure.md
 │   ├── article-reviewer.md
+│   ├── article-structure.md
 │   ├── evidence.md
 │   ├── revision.md
 │   └── voice-profile.md
-└── scripts/check_ai_pm_article.py
-```
+└── scripts/
+    └── check_ai_pm_article.py
+~~~
 
-- `SKILL.md` 定义任务边界和完整工作流。
-- `voice-profile.md` 保存已经确认的长期写作习惯。
-- `article-structure.md` 提供不同文章类型的论证结构。
-- `article-reviewer.md` 定义从打开审阅页面到按批注修改、保存和复核的完整流程。
-- `evidence.md` 规定事实、引语、产品能力和个人经历的边界。
-- `revision.md` 用于全文形成后的系统改稿。
-- `check_ai_pm_article.py` 提供可重复执行的成稿检查。
+- <code>SKILL.md</code> 定义任务边界、四阶段协作和 Article Reviewer 路由。
+- <code>voice-profile.md</code> 保存已经确认的个人声音和写作习惯。
+- <code>article-structure.md</code> 提供不同文章类型的结构与论证方法。
+- <code>evidence.md</code> 规定事实、数据、产品能力和个人经历的边界。
+- <code>revision.md</code> 负责全文形成后的系统改稿。
+- <code>article-reviewer.md</code> 定义打开、批注、修改、保存和复核流程。
+- <code>check_ai_pm_article.py</code> 提供两种可重复执行的成稿检查模式。
 
-## 许可
+### 不适用的任务
+
+这套 Skill 不用于 PRD、管理层汇报、小说、营销软文、普通聊天和纯代码教程。遇到这些任务时，应当使用更合适的 Skill 或工作流。
+
+### License
 
 MIT License
 
 ## English
 
-`ai-pm-personal-writing` is a personal writing skill for AI product management articles and reflective product essays. It turns real experiences, product materials, verified evidence, and the author's judgment into writing with a clear position, explicit boundaries, and practical product implications.
+### Naming
 
-Current version: `2.4.0`.
+- The GitHub repository is named <code>ishy-personal-writing-workflow</code>.
+- The Codex skill is invoked as <code>$ai-pm-personal-writing</code>.
+- The repository name describes ISHY's complete writing workflow, while the skill name remains stable for invocation compatibility.
 
-### What it is for
+### What this workflow does
 
-- AI product methods, product design, and iteration experience
-- Agent, RAG, model evaluation, and large-model application analysis
-- AI industry and product trend analysis
-- Product case studies, project retrospectives, and career-transition explainers
-- Reflective product essays that begin with personal experience, reading, or a real disagreement
-- Structural revision, fact-checking, and substantial editing of existing articles
+ISHY Personal Writing Workflow covers the full path from an unsettled idea to a reviewed, versioned article.
 
-It is not intended for PRDs, executive reports, fiction, promotional copy, casual conversation, or code-only tutorials.
+Topic and materials → claim discussion → outline approval → section drafting → full revision → automated checks → Article Reviewer annotations → new saved version
 
-### Writing characteristics
+It does not treat a topic as permission to generate a polished-looking long article immediately. It first checks whether the question holds, whether the materials are sufficient, which statements are facts, and which are the author's judgment. After drafting, the article can move into Article Reviewer for direct editing, annotations, version-safe revision, and verification.
 
-- Open with a judgment, a concrete experience, or a real conflict.
-- Examine the question, conceptual boundaries, and hidden assumptions before choosing a position.
-- Separate facts, personal reactions, author inference, and current unknowns.
-- Consider user value, product mechanisms, commercial conditions, and risk boundaries together.
-- Address the strongest counterargument instead of inventing a weak opposing view.
-- Preserve the time, frequency, context, and degree of real experiences without turning them into universal claims.
-- Translate abstract judgments into authorization, correction, revocation, human takeover, and testable standards.
-- Keep the voice professional, natural, and restrained without manufacturing slogans, rhetorical questions, or marketing language.
+### Core capabilities
 
-Reflective product essays may follow an additional path. The writer can first place themselves inside the problem, move from close relationships and reading materials to a real product case, and finish with a concrete action or a question that remains unresolved.
+| Capability | What it does |
+| --- | --- |
+| Claim discussion | Identifies the real question, hidden assumptions, central claim, strongest counterargument, and limits |
+| Material checks | Separates personal experience, official facts, public evidence, inference, and unknowns |
+| Outline design | Gives every section a purpose, supporting material, limitations, and a clear role in the argument |
+| Section drafting | Drafts from the approved outline and preserves the user's latest edits as the only current version |
+| Full revision | Removes repetition and aligns terminology, sources, chronology, structure, and personal voice |
+| Two writing modes | Supports professional AI product articles and reflective product essays |
+| Personal voice | Preserves the time, frequency, context, and limits of real experience while keeping a clear but restrained position |
+| Article checker | Flags placeholders, generic openings, model-like signposting, hype, absolute claims, rhetorical questions, repetitive short sentences, and source risks |
+| Article Reviewer | Opens an editable review page, reads direct edits and annotations, saves a new version, and reopens it for verification |
 
-### Default collaboration workflow
+### Two writing modes
 
-The skill works in four stages by default.
+#### Professional AI product articles
 
-1. Discuss the real question, central claim, evidence, counterarguments, and conditions under which the claim holds.
+Designed for AI product methods, product design and iteration, Agents, RAG, model evaluation, industry analysis, product case studies, project retrospectives, and professional explainers.
+
+The workflow checks user value, product mechanics, commercial conditions, risk boundaries, counterarguments, and testable standards. Technical concepts must eventually connect to observable product behavior.
+
+#### Reflective product essays
+
+Designed for articles that begin with personal experience, reading, close relationships, or a real disagreement and gradually move toward a product judgment.
+
+The writer can first place themselves inside the problem, then use verified intellectual material and a real product case to develop the argument. The ending returns to a concrete action, an unresolved question, or a clearer boundary instead of making a sudden claim about the entire era.
+
+### Default collaboration flow
+
+1. Discuss the question, central claim, evidence, counterarguments, limits, and unknowns.
 2. Confirm the title, audience, purpose of each section, supporting materials, and expected length.
-3. Draft and revise one section at a time according to the confirmed outline.
-4. Integrate the full article and align terminology, sources, structure, and personal voice.
+3. Draft one section at a time while preserving the user's latest edits.
+4. Integrate the full article, align sources and terminology, and run the appropriate article-checking mode.
 
-To receive the complete draft in one pass, explicitly ask to “skip confirmation” or “write the full article directly.” The skill will still test the claim and structure internally.
+To receive a complete draft in one pass, explicitly ask to “skip confirmation,” “write the full article directly,” or “continue without stopping.” The skill will still test the claim and structure internally.
 
-### Article Reviewer workflow
+### Article Reviewer loop
 
-After drafting an article, you can ask the skill to open the current version in Article Reviewer. The review page supports direct editing and annotations, with changes saved automatically.
+Ask the skill to finish an article and open it for review:
 
-When you return to the conversation and say “start editing,” the skill retrieves the latest saved version and all annotations, changes only the annotated content, saves a new version, clears resolved annotations, and reopens the article. It stops instead of guessing when an annotation is ambiguous or a version conflict occurs.
+~~~text
+Use $ai-pm-personal-writing to finish this article, then open it in Article Reviewer for my edits and annotations.
+~~~
 
-Article Reviewer opens only when requested. Ordinary writing tasks do not launch it automatically.
+In the review page, edit the body directly or attach notes to selected text. Wait until the page reports that the version has been saved, then return to the conversation and say “start editing” or “apply the annotations.”
 
-### Installation
+Codex must retrieve the latest saved article and every active annotation before making changes. It then applies only the authorized edits, saves a new immutable version, clears resolved annotations, and reopens the same article for verification.
 
-Clone the repository into the Codex Skills directory. The repository is currently private, so cloning requires a GitHub account with access.
+The process stops rather than guessing when an annotation is ambiguous, the article is empty, a version conflict occurs, or a linked source file has changed. Linked source files are hash-checked and backed up before any write.
 
-```bash
-git clone https://github.com/Irixil/ai-pm-writing-skill.git ~/.codex/skills/ai-pm-personal-writing
-```
+Article Reviewer is optional and opens only when requested. The writing workflow and article checker still work without it.
 
-You can also download the repository and copy the complete folder to `~/.codex/skills/ai-pm-personal-writing`.
+### Evidence boundaries
+
+- Preserve the original time, frequency, context, and degree of personal experience.
+- Prefer official documentation, observed product behavior, and verifiable sources for product capabilities.
+- Keep model capability, product capability, and specific versions separate.
+- State the source, date, sample, and measurement definition for data.
+- Never invent user identities, precise quotations, platform reactions, or universal conclusions.
+- Use cautious language when the evidence supports correlation or a possible mechanism rather than causation.
+- A nonfiction article planned at 1,200 Chinese characters or more needs at least five concrete materials that can form a real process.
 
 ### Usage examples
 
-```text
+~~~text
 Use $ai-pm-personal-writing to discuss the central claim for an article about authorization boundaries in Agent products.
-```
+~~~
 
-```text
-Use $ai-pm-personal-writing to turn this real product experience into a reflective product essay.
-```
+~~~text
+Use $ai-pm-personal-writing to skip confirmation and turn these materials into a complete AI product analysis.
+~~~
 
-```text
-Use $ai-pm-personal-writing to revise this AI product article in one pass and check its facts, counterarguments, and conclusion boundaries.
-```
+~~~text
+Use $ai-pm-personal-writing to turn this real experience and reading material into a reflective product essay.
+~~~
 
-```text
-Use $ai-pm-personal-writing to finish this article, then open it in Article Reviewer for my annotations.
-```
+~~~text
+Use $ai-pm-personal-writing to review this article's facts, counterarguments, product boundaries, and conclusion, then complete the revision.
+~~~
+
+### Installation
+
+~~~bash
+git clone https://github.com/Irixil/ishy-personal-writing-workflow.git ~/.codex/skills/ai-pm-personal-writing
+~~~
+
+Open a new Codex task and invoke <code>$ai-pm-personal-writing</code>.
+
+The Article Reviewer workflow requires the Article Reviewer plugin. All other writing and checking features work without it.
 
 ### Article checker
 
-Check a professional article:
+Professional article:
 
-```bash
+~~~bash
 python3 scripts/check_ai_pm_article.py draft.md
-```
+~~~
 
-Check a reflective product essay:
+Reflective product essay:
 
-```bash
+~~~bash
 python3 scripts/check_ai_pm_article.py --mode essay draft.md
-```
+~~~
 
-The checker flags placeholders, generic openings, model-like signposting, promotional language, reversal-sentence density, absolute claims, rows of short sentences, and source risks. It detects textual patterns only. Final decisions must still be based on the evidence, central claim, and genre.
+The checker surfaces repeatable textual patterns and risk signals. It does not replace editorial judgment about evidence, claims, or genre.
 
 ### Repository structure
 
-```text
+~~~text
 ai-pm-personal-writing/
 ├── SKILL.md
+├── VERSION
+├── README.md
+├── LICENSE
 ├── agents/openai.yaml
 ├── assets/icon.svg
 ├── references/
-│   ├── article-structure.md
 │   ├── article-reviewer.md
+│   ├── article-structure.md
 │   ├── evidence.md
 │   ├── revision.md
 │   └── voice-profile.md
 └── scripts/check_ai_pm_article.py
-```
+~~~
 
-- `SKILL.md` defines task boundaries and the complete workflow.
-- `voice-profile.md` stores confirmed long-term writing preferences.
-- `article-structure.md` provides argument structures for different article types.
-- `article-reviewer.md` defines the complete open, annotate, revise, save, and verification workflow.
-- `evidence.md` defines boundaries for facts, quotations, product capabilities, and personal experience.
-- `revision.md` guides systematic revision after the full draft exists.
-- `check_ai_pm_article.py` provides a repeatable final-draft check.
+### Out of scope
+
+This skill is not intended for PRDs, executive reports, fiction, promotional copy, casual conversation, or code-only tutorials.
 
 ### License
 
