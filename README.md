@@ -16,7 +16,7 @@
 
 ### 这套工作流解决什么
 
-它覆盖一篇文章从想法还没有收束，到最终完成审阅的全过程。
+它覆盖一篇文章从想法还没有收束，到最终完成审阅的全过程，也可以为这些文章制作风格一致的封面和系列插图。
 
 题目与材料 → 观点讨论 → 大纲确认 → 逐章写作 → 全文整合 → 自动检查 → Article Reviewer 批注 → 保存新版本
 
@@ -35,6 +35,7 @@
 | 个人声音 | 保留具体经历的时间、频率和限制，写出有立场但克制、有一线实操感的作者位置 |
 | 文章检查器 | 检查占位符、空泛开场、模型化路标、营销表达、绝对化断言、反问、短句排队和来源风险 |
 | Article Reviewer | 打开可编辑审阅页面，接收直接修改和批注，按版本安全保存并重新打开 |
+| 文章插图 | 按指定视觉 Profile 先做样稿、根据反馈局部修改，经两次确认后完成批量图片与长期角色固定 |
 
 ### 两种文章模式
 
@@ -81,6 +82,16 @@
 所有章节确认后，Skill 会合并重复内容、修正衔接、统一术语和来源，并运行对应的文章检查模式。
 
 如果希望一次性交付，可以明确说“跳过确认”“直接写完”或“连续生成”。Skill 仍会在内部完成观点和结构检查。
+
+### 红围巾猫头鹰插图流程
+
+文章需要封面、配图或系列插图时，可以调用“红围巾猫头鹰 × 撕纸拼贴”视觉 Profile。纯写作任务不会自动进入配图流程。
+
+~~~text
+使用红围巾猫头鹰拼贴视觉配置。
+~~~
+
+固定流程为：单张样稿 → 用户反馈局部修改 → 确认本批次角色与风格 → 批量生成 → 整组确认 → 固定长期角色。局部修改只动指定维度；重要中文优先确定性排版，图像模型直出的中文必须逐字检查。
 
 ### Article Reviewer 审阅闭环
 
@@ -154,6 +165,12 @@ Article Reviewer 是可选功能。普通写作任务不会自动打开审阅页
 使用 $ai-pm-personal-writing 写完文章，并打开 Article Reviewer 让我修改和批注。
 ~~~
 
+制作文章插图：
+
+~~~text
+使用红围巾猫头鹰拼贴视觉配置，为这篇文章制作封面和系列插图。
+~~~
+
 ### 安装
 
 把仓库克隆到 Codex Skills 目录：
@@ -205,17 +222,19 @@ ai-pm-personal-writing/
 │   ├── article-structure.md
 │   ├── evidence.md
 │   ├── revision.md
+│   ├── visual-profile-red-scarf-owl.md
 │   └── voice-profile.md
 └── scripts/
     └── check_ai_pm_article.py
 ~~~
 
-- <code>SKILL.md</code> 定义任务边界、四阶段协作和 Article Reviewer 路由。
+- <code>SKILL.md</code> 定义任务边界、四阶段协作、Article Reviewer 与视觉 Profile 路由。
 - <code>voice-profile.md</code> 保存已经确认的个人声音和写作习惯。
 - <code>article-structure.md</code> 提供不同文章类型的结构与论证方法。
 - <code>evidence.md</code> 规定事实、数据、产品能力和个人经历的边界。
 - <code>revision.md</code> 负责全文形成后的系统改稿。
 - <code>article-reviewer.md</code> 定义打开、批注、修改、保存和复核流程。
+- <code>visual-profile-red-scarf-owl.md</code> 定义红围巾猫头鹰撕纸拼贴插图的角色、视觉、生成和 QA 规则。
 - <code>check_ai_pm_article.py</code> 提供两种可重复执行的成稿检查模式。
 
 ### 不适用的任务
@@ -236,7 +255,7 @@ MIT License
 
 ### What this workflow does
 
-ISHY Personal Writing Workflow covers the full path from an unsettled idea to a reviewed, versioned article.
+ISHY Personal Writing Workflow covers the full path from an unsettled idea to a reviewed, versioned article. It can also create a consistent cover and illustration series for those articles.
 
 Topic and materials → claim discussion → outline approval → section drafting → full revision → automated checks → Article Reviewer annotations → new saved version
 
@@ -255,6 +274,7 @@ It does not treat a topic as permission to generate a polished-looking long arti
 | Personal voice | Preserves the time, frequency, context, and limits of real experience while keeping a clear but restrained position |
 | Article checker | Flags placeholders, generic openings, model-like signposting, hype, absolute claims, rhetorical questions, repetitive short sentences, and source risks |
 | Article Reviewer | Opens an editable review page, reads direct edits and annotations, saves a new version, and reopens it for verification |
+| Article illustrations | Uses a selected visual profile to create one sample, apply scoped feedback, pass two approval gates, and only then lock a reusable character |
 
 ### Two writing modes
 
@@ -278,6 +298,16 @@ The writer can first place themselves inside the problem, then use verified inte
 4. Integrate the full article, align sources and terminology, and run the appropriate article-checking mode.
 
 To receive a complete draft in one pass, explicitly ask to “skip confirmation,” “write the full article directly,” or “continue without stopping.” The skill will still test the claim and structure internally.
+
+### Red scarf owl illustration flow
+
+For a cover, article image, or illustration series, invoke the “red scarf owl × torn-paper collage” visual profile. Pure writing tasks do not start this workflow automatically.
+
+~~~text
+使用红围巾猫头鹰拼贴视觉配置。
+~~~
+
+The fixed sequence is: one sample → scoped edits from user feedback → approval of the batch character and style → batch generation → full-set approval → long-term character lock. Important Chinese text uses deterministic typesetting when possible; any model-rendered Chinese is checked character by character.
 
 ### Article Reviewer loop
 
@@ -323,6 +353,10 @@ Use $ai-pm-personal-writing to turn this real experience and reading material in
 Use $ai-pm-personal-writing to review this article's facts, counterarguments, product boundaries, and conclusion, then complete the revision.
 ~~~
 
+~~~text
+使用红围巾猫头鹰拼贴视觉配置，为这篇文章制作封面和系列插图。
+~~~
+
 ### Installation
 
 ~~~bash
@@ -364,6 +398,7 @@ ai-pm-personal-writing/
 │   ├── article-structure.md
 │   ├── evidence.md
 │   ├── revision.md
+│   ├── visual-profile-red-scarf-owl.md
 │   └── voice-profile.md
 └── scripts/check_ai_pm_article.py
 ~~~
