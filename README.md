@@ -4,7 +4,7 @@
 
 [中文](#中文) · [English](#english)
 
-当前版本为 <code>2.4.0</code>。
+当前版本为 <code>2.6.0</code>。
 
 ## 中文
 
@@ -18,7 +18,7 @@
 
 它覆盖一篇文章从想法还没有收束，到最终完成审阅的全过程，也可以为这些文章制作风格一致的封面和系列插图。
 
-题目与材料 → 观点讨论 → 大纲确认 → 逐章写作 → 全文整合 → 自动检查 → Article Reviewer 批注 → 保存新版本
+题目与材料 → 观点讨论 → 大纲确认 → 逐章写作 → 全文整合 → 按需制作配图与公众号排版 → 自动检查或 Article Reviewer 审阅
 
 它不会只根据一个主题直接生成一篇看起来完整的长文。开始写作前会先检查题目是否成立、材料是否足够、哪些内容属于事实、哪些只是作者判断。文章形成以后，还可以进入 Article Reviewer，由作者直接编辑、添加批注，再让 Codex 按最新版继续修改。
 
@@ -35,7 +35,8 @@
 | 个人声音 | 保留具体经历的时间、频率和限制，写出有立场但克制、有一线实操感的作者位置 |
 | 文章检查器 | 检查占位符、空泛开场、模型化路标、营销表达、绝对化断言、反问、短句排队和来源风险 |
 | Article Reviewer | 打开可编辑审阅页面，接收直接修改和批注，按版本安全保存并重新打开 |
-| 文章插图 | 按指定视觉 Profile 先做样稿、根据反馈局部修改，经两次确认后完成批量图片与长期角色固定 |
+| 文章配图 | 先抽取每张图的核心关系，再确认封面、固定角色、批量生成正文图并插回公众号排版 |
+| 可选视觉 Profile | 用户指定时调用“红围巾猫头鹰拼贴”，不把猫头鹰强制套到所有文章 |
 
 ### 两种文章模式
 
@@ -82,16 +83,6 @@
 所有章节确认后，Skill 会合并重复内容、修正衔接、统一术语和来源，并运行对应的文章检查模式。
 
 如果希望一次性交付，可以明确说“跳过确认”“直接写完”或“连续生成”。Skill 仍会在内部完成观点和结构检查。
-
-### 红围巾猫头鹰插图流程
-
-文章需要封面、配图或系列插图时，可以调用“红围巾猫头鹰 × 撕纸拼贴”视觉 Profile。纯写作任务不会自动进入配图流程。
-
-~~~text
-使用红围巾猫头鹰拼贴视觉配置。
-~~~
-
-固定流程为：单张样稿 → 用户反馈局部修改 → 确认本批次角色与风格 → 批量生成 → 整组确认 → 固定长期角色。局部修改只动指定维度；重要中文优先确定性排版，图像模型直出的中文必须逐字检查。
 
 ### Article Reviewer 审阅闭环
 
@@ -165,12 +156,6 @@ Article Reviewer 是可选功能。普通写作任务不会自动打开审阅页
 使用 $ai-pm-personal-writing 写完文章，并打开 Article Reviewer 让我修改和批注。
 ~~~
 
-制作文章插图：
-
-~~~text
-使用红围巾猫头鹰拼贴视觉配置，为这篇文章制作封面和系列插图。
-~~~
-
 ### 安装
 
 把仓库克隆到 Codex Skills 目录：
@@ -221,6 +206,8 @@ ai-pm-personal-writing/
 │   ├── article-reviewer.md
 │   ├── article-structure.md
 │   ├── evidence.md
+│   ├── examples/
+│   │   └── red-scarf-owl-ai-workflow-series.md
 │   ├── revision.md
 │   ├── visual-profile-red-scarf-owl.md
 │   └── voice-profile.md
@@ -234,7 +221,8 @@ ai-pm-personal-writing/
 - <code>evidence.md</code> 规定事实、数据、产品能力和个人经历的边界。
 - <code>revision.md</code> 负责全文形成后的系统改稿。
 - <code>article-reviewer.md</code> 定义打开、批注、修改、保存和复核流程。
-- <code>visual-profile-red-scarf-owl.md</code> 定义红围巾猫头鹰撕纸拼贴插图的角色、视觉、生成和 QA 规则。
+- <code>visual-profile-red-scarf-owl.md</code> 定义可选的红围巾猫头鹰编辑拼贴视觉 Profile。
+- <code>examples/red-scarf-owl-ai-workflow-series.md</code> 保存已确认系列的语义脚本和资产边界。
 - <code>check_ai_pm_article.py</code> 提供两种可重复执行的成稿检查模式。
 
 ### 不适用的任务
@@ -257,7 +245,7 @@ MIT License
 
 ISHY Personal Writing Workflow covers the full path from an unsettled idea to a reviewed, versioned article. It can also create a consistent cover and illustration series for those articles.
 
-Topic and materials → claim discussion → outline approval → section drafting → full revision → automated checks → Article Reviewer annotations → new saved version
+Topic and materials → claim discussion → outline approval → section drafting → full revision → optional illustration and WeChat layout → automated checks or Article Reviewer review
 
 It does not treat a topic as permission to generate a polished-looking long article immediately. It first checks whether the question holds, whether the materials are sufficient, which statements are facts, and which are the author's judgment. After drafting, the article can move into Article Reviewer for direct editing, annotations, version-safe revision, and verification.
 
@@ -274,7 +262,8 @@ It does not treat a topic as permission to generate a polished-looking long arti
 | Personal voice | Preserves the time, frequency, context, and limits of real experience while keeping a clear but restrained position |
 | Article checker | Flags placeholders, generic openings, model-like signposting, hype, absolute claims, rhetorical questions, repetitive short sentences, and source risks |
 | Article Reviewer | Opens an editable review page, reads direct edits and annotations, saves a new version, and reopens it for verification |
-| Article illustrations | Uses a selected visual profile to create one sample, apply scoped feedback, pass two approval gates, and only then lock a reusable character |
+| Article illustration | Extracts each image's semantic job, approves a cover proof, locks the character, renders the body series, and places it back into the WeChat layout |
+| Optional visual profile | Uses the named Red Scarf Owl Collage profile only when requested or approved; it is not mandatory for every article |
 
 ### Two writing modes
 
@@ -298,16 +287,6 @@ The writer can first place themselves inside the problem, then use verified inte
 4. Integrate the full article, align sources and terminology, and run the appropriate article-checking mode.
 
 To receive a complete draft in one pass, explicitly ask to “skip confirmation,” “write the full article directly,” or “continue without stopping.” The skill will still test the claim and structure internally.
-
-### Red scarf owl illustration flow
-
-For a cover, article image, or illustration series, invoke the “red scarf owl × torn-paper collage” visual profile. Pure writing tasks do not start this workflow automatically.
-
-~~~text
-使用红围巾猫头鹰拼贴视觉配置。
-~~~
-
-The fixed sequence is: one sample → scoped edits from user feedback → approval of the batch character and style → batch generation → full-set approval → long-term character lock. Important Chinese text uses deterministic typesetting when possible; any model-rendered Chinese is checked character by character.
 
 ### Article Reviewer loop
 
@@ -353,10 +332,6 @@ Use $ai-pm-personal-writing to turn this real experience and reading material in
 Use $ai-pm-personal-writing to review this article's facts, counterarguments, product boundaries, and conclusion, then complete the revision.
 ~~~
 
-~~~text
-使用红围巾猫头鹰拼贴视觉配置，为这篇文章制作封面和系列插图。
-~~~
-
 ### Installation
 
 ~~~bash
@@ -397,6 +372,7 @@ ai-pm-personal-writing/
 │   ├── article-reviewer.md
 │   ├── article-structure.md
 │   ├── evidence.md
+│   ├── examples/red-scarf-owl-ai-workflow-series.md
 │   ├── revision.md
 │   ├── visual-profile-red-scarf-owl.md
 │   └── voice-profile.md
